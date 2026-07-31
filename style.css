@@ -391,9 +391,12 @@ body {
 }
 
 @keyframes float-birthday-photo {
-    0%, 100% {
+
+    0%,
+    100% {
         transform: translateY(0);
     }
+
     50% {
         transform: translateY(-10px);
     }
@@ -622,7 +625,8 @@ body {
     width: 90vw;
     max-width: 650px;
     aspect-ratio: 16 / 9;
-    height: auto; /* Tinggi otomatis menyesuaikan aspect ratio */
+    height: auto;
+    /* Tinggi otomatis menyesuaikan aspect ratio */
 }
 
 #image-modal.show-modal #modal-iframe {
@@ -1456,28 +1460,80 @@ body {
    ANIMASI POP-UP PIN
 ========================================= */
 @keyframes wiggleCat {
-    0%, 100% { transform: rotate(0deg) scale(1); }
-    15% { transform: rotate(-12deg) scale(1.05); }
-    30% { transform: rotate(10deg) scale(1.08); }
-    45% { transform: rotate(-8deg) scale(1.05); }
-    60% { transform: rotate(6deg) scale(1.03); }
-    75% { transform: rotate(-3deg) scale(1.01); }
+
+    0%,
+    100% {
+        transform: rotate(0deg) scale(1);
+    }
+
+    15% {
+        transform: rotate(-12deg) scale(1.05);
+    }
+
+    30% {
+        transform: rotate(10deg) scale(1.08);
+    }
+
+    45% {
+        transform: rotate(-8deg) scale(1.05);
+    }
+
+    60% {
+        transform: rotate(6deg) scale(1.03);
+    }
+
+    75% {
+        transform: rotate(-3deg) scale(1.01);
+    }
 }
 
 @keyframes bounceEmoji {
-    0% { transform: scale(0) rotate(-20deg); opacity: 0; }
-    50% { transform: scale(1.3) rotate(5deg); opacity: 1; }
-    70% { transform: scale(0.9) rotate(-3deg); }
-    100% { transform: scale(1) rotate(0deg); opacity: 1; }
+    0% {
+        transform: scale(0) rotate(-20deg);
+        opacity: 0;
+    }
+
+    50% {
+        transform: scale(1.3) rotate(5deg);
+        opacity: 1;
+    }
+
+    70% {
+        transform: scale(0.9) rotate(-3deg);
+    }
+
+    100% {
+        transform: scale(1) rotate(0deg);
+        opacity: 1;
+    }
 }
 
 @keyframes popupShake {
-    0%, 100% { transform: scale(1) rotate(0deg); }
-    10% { transform: scale(1) rotate(-2deg) translateX(-4px); }
-    20% { transform: scale(1.02) rotate(2deg) translateX(4px); }
-    30% { transform: scale(1) rotate(-1deg) translateX(-3px); }
-    40% { transform: scale(1.01) rotate(1deg) translateX(3px); }
-    50% { transform: scale(1) rotate(0deg); }
+
+    0%,
+    100% {
+        transform: scale(1) rotate(0deg);
+    }
+
+    10% {
+        transform: scale(1) rotate(-2deg) translateX(-4px);
+    }
+
+    20% {
+        transform: scale(1.02) rotate(2deg) translateX(4px);
+    }
+
+    30% {
+        transform: scale(1) rotate(-1deg) translateX(-3px);
+    }
+
+    40% {
+        transform: scale(1.01) rotate(1deg) translateX(3px);
+    }
+
+    50% {
+        transform: scale(1) rotate(0deg);
+    }
 }
 
 .pin-popup-box.shake-popup {
@@ -1490,10 +1546,23 @@ body {
 }
 
 @keyframes shakeError {
-    0%, 100% { transform: translateX(0); }
-    25% { transform: translateX(-10px); }
-    50% { transform: translateX(10px); }
-    75% { transform: translateX(-10px); }
+
+    0%,
+    100% {
+        transform: translateX(0);
+    }
+
+    25% {
+        transform: translateX(-10px);
+    }
+
+    50% {
+        transform: translateX(10px);
+    }
+
+    75% {
+        transform: translateX(-10px);
+    }
 }
 
 /* =========================================
