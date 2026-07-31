@@ -18,7 +18,7 @@
 
     <div id="music-popup" class="music-popup">
         <p class="now-playing-top">Now Playing</p>
-        <img src="https://picsum.photos/100/100?random=20" alt="Album Cover" class="album-cover">
+        <img src="img/you.jpeg" alt="Album Cover" class="album-cover">
         <div class="music-info">
             <p class="song-title">Shape of My Heart</p>
             <p class="artist-name">Backstreet Boys</p>
@@ -92,7 +92,7 @@
                 ada
                 untuk ku, dirimu selalu mewarnai hidupku, kehadiran mu merubah hidupku sepenuhnya menjadi bermakna
                 sayang, aku bahagia sekali bisa bahagia sama dirimu cintaku terima kasih sayang, i love u so much my
-                girldriend.</p>
+                girlfriend.</p>
             <div class="pulsating-heart">🤍</div>
 
             <p class="scroll-hint">✨Scroll pelan-pelan ke bawah ya sayang..✨</p>
@@ -106,7 +106,7 @@
                 kenyataan, setiap usaha yang kamu perjuangkan membuahkan hasil terbaik, dan setiap langkah yang kamu
                 ambil selalu membawa kamu semakin dekat dengan mimpi-mimpimu.</p>
             <p class="fade-in-text">Aku juga berharap, apa pun yang akan kamu hadapi ke depannya, kamu tidak pernah
-                merasa sendirian. Semoga aku selalu diberi kesempatan untuk menemani setiap prosesmu—merayakan setiap
+                merasa sendirian. Semoga aku selalu diberi kesempatan untuk menemani setiap prosesmu, merayakan setiap
                 kebahagiaan, menguatkanmu di saat lelah, dan tetap berjalan di sisimu, bukan hanya di hari-hari yang
                 mudah, tetapi juga di hari-hari yang penuh tantangan. Karena melihatmu bahagia akan selalu menjadi salah
                 satu hal yang paling berarti bagiku.</p>
@@ -218,6 +218,7 @@
             </div>
         </section>
 
+
         <section class="slide glass-panel show-on-scroll">
             <h1 class="aesthetic-font">You Are My Universe</h1>
 
@@ -247,6 +248,23 @@
             <p class="sender-name aesthetic-font baby-pink-text" style="font-size: 2rem; margin-top: 5px;">Rama
             </p>
         </section>
+
+        <!-- Fireworks Section -->
+        <section class="slide glass-panel show-on-scroll fireworks-section">
+            <h1 class="aesthetic-font">🎆</h1>
+            <p class="typing-text" style="margin-top: 10px; margin-bottom: 30px;">
+                Ayo nyalain kembang api nya sayang !!
+            </p>
+            <button id="fireworks-btn" class="fireworks-trigger-btn aesthetic-font" onclick="startFireworks()">
+                Nyalain Kembang Api
+            </button>
+        </section>
+
+        <!-- Fireworks Canvas Overlay -->
+        <div id="fireworks-overlay" class="fireworks-overlay">
+            <canvas id="fireworks-canvas"></canvas>
+            <div id="fireworks-text-overlay" class="fireworks-text-overlay"></div>
+        </div>
         <div id="image-modal" onclick="tutupModal()">
             <img id="modal-img" src="" alt="Foto Diperbesar">
 

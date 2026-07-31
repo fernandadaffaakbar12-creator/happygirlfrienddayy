@@ -841,3 +841,229 @@ document.addEventListener('DOMContentLoaded', () => {
         }, 500);
     });
 });
+
+// ==========================================
+// FIREWORKS SHOW - 15 SECONDS (OPTIMIZED)
+// ==========================================
+let fireworksRunning = false;
+
+function startFireworks() {
+    if (fireworksRunning) return;
+    fireworksRunning = true;
+
+    const overlay = document.getElementById('fireworks-overlay');
+    const canvas = document.getElementById('fireworks-canvas');
+    const textOverlay = document.getElementById('fireworks-text-overlay');
+    const ctx = canvas.getContext('2d');
+
+    // Use device pixel ratio for sharp rendering but limit for performance
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    function resizeCanvas() {
+        canvas.width = window.innerWidth * dpr;
+        canvas.height = window.innerHeight * dpr;
+        canvas.style.width = window.innerWidth + 'px';
+        canvas.style.height = window.innerHeight + 'px';
+        ctx.scale(dpr, dpr);
+    }
+    resizeCanvas();
+
+    overlay.classList.add('active');
+
+    const W = () => window.innerWidth;
+    const H = () => window.innerHeight;
+
+    const particles = [];
+    const rockets = [];
+    const MAX_PARTICLES = 350;
+    const DURATION = 15000;
+    const startTime = Date.now();
+
+    // Color palettes
+    const palettes = [
+        ['#ff6b9d', '#ff8ec4', '#ffb3d9', '#ffffff'],
+        ['#c44dff', '#d580ff', '#e6b3ff', '#ffffff'],
+        ['#6b5ce7', '#8f83ed', '#b3aaf3', '#ffffff'],
+        ['#ff4757', '#ff6b81', '#ffb3c1', '#ffffff'],
+        ['#ffa502', '#ffc048', '#ffd580', '#ffffff'],
+        ['#2ed573', '#5ce094', '#b8f5d6', '#ffffff'],
+        ['#1e90ff', '#4da6ff', '#b3d9ff', '#ffffff'],
+        ['#ff6348', '#ff8a70', '#ffd8c2', '#ffffff'],
+    ];
+
+    // Lightweight particle - no trail, no shadow
+    class Particle {
+        constructor(x, y, color, vx, vy, size) {
+            this.x = x;
+            this.y = y;
+            this.color = color;
+            this.vx = vx;
+            this.vy = vy;
+            this.size = size;
+            this.alpha = 1;
+            this.decay = 0.015 + Math.random() * 0.02;
+            this.gravity = 0.05;
+        }
+
+        update() {
+            this.vx *= 0.98;
+            this.vy += this.gravity;
+            this.x += this.vx;
+            this.y += this.vy;
+            this.alpha -= this.decay;
+        }
+
+        draw(ctx) {
+            ctx.globalAlpha = this.alpha;
+            ctx.fillStyle = this.color;
+            ctx.fillRect(this.x - this.size / 2, this.y - this.size / 2, this.size, this.size);
+        }
+    }
+
+    // Lightweight rocket
+    class Rocket {
+        constructor() {
+            this.x = W() * (0.15 + Math.random() * 0.7);
+            this.y = H();
+            this.targetY = H() * (0.12 + Math.random() * 0.33);
+            this.speed = 5 + Math.random() * 3;
+            this.exploded = false;
+            this.palette = palettes[Math.floor(Math.random() * palettes.length)];
+            this.vy = -this.speed;
+            this.vx = (Math.random() - 0.5) * 2;
+        }
+
+        update() {
+            this.x += this.vx;
+            this.y += this.vy;
+            this.vy += 0.03;
+
+            if (this.y <= this.targetY) {
+                this.explode();
+                this.exploded = true;
+            }
+        }
+
+        explode() {
+            // Limit particles if too many already
+            const budget = MAX_PARTICLES - particles.length;
+            const count = Math.min(30 + Math.floor(Math.random() * 20), budget);
+            if (count <= 0) return;
+
+            for (let i = 0; i < count; i++) {
+                const angle = (Math.PI * 2 / count) * i + Math.random() * 0.15;
+                const speed = 2 + Math.random() * 3.5;
+                const vx = Math.cos(angle) * speed;
+                const vy = Math.sin(angle) * speed;
+                const color = this.palette[Math.floor(Math.random() * this.palette.length)];
+                const size = 2 + Math.random() * 2;
+                particles.push(new Particle(this.x, this.y, color, vx, vy, size));
+            }
+        }
+
+        draw(ctx) {
+            ctx.globalAlpha = 1;
+            ctx.fillStyle = '#ffe0b2';
+            ctx.fillRect(this.x - 1.5, this.y - 1.5, 3, 3);
+        }
+    }
+
+    // Launch timing
+    let launchTimer = null;
+    function scheduleLaunch() {
+        const elapsed = Date.now() - startTime;
+        if (elapsed >= DURATION - 500) return;
+
+        const progress = elapsed / DURATION;
+        let delay;
+        if (progress < 0.25) delay = 700;
+        else if (progress < 0.5) delay = 500;
+        else if (progress < 0.75) delay = 350;
+        else delay = 150; // Grand finale
+
+        launchTimer = setTimeout(() => {
+            rockets.push(new Rocket());
+            scheduleLaunch();
+        }, delay);
+    }
+
+    // Start launching
+    rockets.push(new Rocket());
+    scheduleLaunch();
+
+    // Text events
+    setTimeout(() => {
+        textOverlay.textContent = 'Happy Girlfriend Day';
+        textOverlay.classList.add('show');
+    }, 4000);
+
+    setTimeout(() => {
+        textOverlay.classList.remove('show');
+    }, 10000);
+
+    setTimeout(() => {
+        textOverlay.textContent = 'I Love You, My Everything';
+        textOverlay.classList.add('show');
+    }, 11000);
+
+    // Main animation loop
+    function animate() {
+        const elapsed = Date.now() - startTime;
+
+        if (elapsed >= DURATION + 2000) {
+            // Cleanup
+            ctx.setTransform(1, 0, 0, 1, 0, 0);
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            overlay.classList.remove('active');
+            textOverlay.classList.remove('show');
+            textOverlay.textContent = '';
+            clearTimeout(launchTimer);
+            fireworksRunning = false;
+            particles.length = 0;
+            rockets.length = 0;
+            return;
+        }
+
+        // Semi-transparent black overlay for fade trails
+        ctx.globalAlpha = 0.2;
+        ctx.fillStyle = '#000000';
+        ctx.fillRect(0, 0, W(), H());
+
+        // Update & draw rockets
+        for (let i = rockets.length - 1; i >= 0; i--) {
+            const r = rockets[i];
+            r.update();
+            if (r.exploded) {
+                rockets.splice(i, 1);
+            } else {
+                r.draw(ctx);
+            }
+        }
+
+        // Update & draw particles
+        for (let i = particles.length - 1; i >= 0; i--) {
+            const p = particles[i];
+            p.update();
+            if (p.alpha <= 0) {
+                particles.splice(i, 1);
+            } else {
+                p.draw(ctx);
+            }
+        }
+
+        // Reset globalAlpha
+        ctx.globalAlpha = 1;
+
+        // Fade out in last 2 seconds
+        if (elapsed > DURATION) {
+            const fade = (elapsed - DURATION) / 2000;
+            ctx.globalAlpha = fade * 0.4;
+            ctx.fillStyle = '#000000';
+            ctx.fillRect(0, 0, W(), H());
+            ctx.globalAlpha = 1;
+        }
+
+        requestAnimationFrame(animate);
+    }
+
+    animate();
+}
