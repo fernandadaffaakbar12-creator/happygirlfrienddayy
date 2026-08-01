@@ -175,7 +175,7 @@
         const pinPopupClose = document.getElementById('pin-popup-close');
 
         // DEFAULT PIN: Silakan ubah angka ini jika ingin PIN lain
-        const SECRET_PIN = "1304";
+        const SECRET_PIN = "210825";
 
         let pinAttempt = 0;
         let popupTimeout = null;
@@ -281,7 +281,7 @@
 
         if (pinInput) {
             pinInput.addEventListener('input', function () {
-                if (pinInput.value.length === 4) {
+                if (pinInput.value.length === 6) {
                     // Delay sedikit agar digit terakhir terasa diketik
                     setTimeout(() => {
                         if (pinInput.value === SECRET_PIN) {
@@ -561,6 +561,7 @@ function ketikTeks(elemen, teks) {
     return new Promise(resolve => {
         let index = 0;
         elemen.innerHTML = '';
+        elemen.classList.add('typing-active');
 
         function ketik() {
             if (index < teks.length) {
@@ -568,6 +569,7 @@ function ketikTeks(elemen, teks) {
                 index++;
                 setTimeout(ketik, 35);
             } else {
+                elemen.classList.remove('typing-active');
                 elemen.classList.add('typing-done');
                 resolve();
             }
